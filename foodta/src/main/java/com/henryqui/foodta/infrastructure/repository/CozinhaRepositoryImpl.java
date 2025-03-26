@@ -5,6 +5,7 @@ import com.henryqui.foodta.domain.repository.CozinhaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,16 +23,19 @@ public class CozinhaRepositoryImpl implements CozinhaRepository {
 
     @Override
     public Cozinha buscar(Long id) {
-        return null;
+        return manager.find(Cozinha.class, id);
     }
 
+    @Transactional
     @Override
     public Cozinha salvar(Cozinha cozinha) {
-        return null;
+        return manager.merge(cozinha);
     }
 
+    @Transactional
     @Override
     public void remover(Long id) {
-
+        Cozinha cozinha = buscar(id);
+        manager.remove(cozinha);
     }
 }

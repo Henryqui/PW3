@@ -5,9 +5,11 @@ import com.henryqui.foodta.domain.model.Estado;
 import com.henryqui.foodta.domain.repository.EstadoRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class EstadoRepositoryImpl implements EstadoRepository {
 
     @PersistenceContext
