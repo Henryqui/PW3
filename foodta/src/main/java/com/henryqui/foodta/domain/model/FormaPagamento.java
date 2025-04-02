@@ -8,18 +8,15 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "cidade")
-public class Cidade {
+@Table(name = "formaPagamento")
+public class FormaPagamento {
 
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "descricaoForma", length = 100)
+    private String descricaoForma;
 
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
-    private Estado estado;
 }
