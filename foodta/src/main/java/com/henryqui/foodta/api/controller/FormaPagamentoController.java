@@ -1,6 +1,5 @@
 package com.henryqui.foodta.api.controller;
 
-import com.henryqui.foodta.domain.model.Cozinha;
 import com.henryqui.foodta.domain.model.FormaPagamento;
 import com.henryqui.foodta.domain.repository.FormaPagamentoRepository;
 import com.henryqui.foodta.domain.service.FormaPagamentoService;

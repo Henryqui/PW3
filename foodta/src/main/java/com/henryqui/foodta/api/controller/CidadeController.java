@@ -1,7 +1,7 @@
 package com.henryqui.foodta.api.controller;
 
 import com.henryqui.foodta.domain.model.Cidade;
-import com.henryqui.foodta.domain.model.Cozinha;
+
 import com.henryqui.foodta.domain.repository.CidadeRepository;
 import com.henryqui.foodta.domain.service.CidadeService;
 import org.springframework.beans.factory.annotation.Autowired;

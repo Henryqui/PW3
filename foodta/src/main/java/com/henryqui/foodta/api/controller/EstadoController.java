@@ -1,6 +1,6 @@
 package com.henryqui.foodta.api.controller;
 
-import com.henryqui.foodta.domain.model.Cozinha;
+
 import com.henryqui.foodta.domain.model.Estado;
 import com.henryqui.foodta.domain.repository.EstadoRepository;
 import com.henryqui.foodta.domain.service.EstadoService;
