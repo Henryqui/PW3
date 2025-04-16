@@ -1,9 +1,11 @@
 package com.henryqui.foodta.api.controller;
 
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.henryqui.foodta.domain.model.Cidade;
 
 import com.henryqui.foodta.domain.repository.CidadeRepository;
 import com.henryqui.foodta.domain.service.CidadeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,21 @@ public class CidadeController {
     public Cidade adicionar(@RequestBody Cidade cidade){
         return cidadeService.salvar(cidade);
 
+    }
+
+    @PutMapping("/{cidadeId}")
+    public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade){
+        Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
+
+        if(cidadeAtual != null){
+
+            BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+
+            cidadeAtual = cidadeService.salvar(cidadeAtual);
+            return ResponseEntity.ok(cidadeAtual);
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
 }
