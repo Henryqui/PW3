@@ -1,5 +1,7 @@
 package com.henryqui.foodta.api.controller;
 
+import com.henryqui.foodta.domain.exception.EntidadeEmUsoException;
+import com.henryqui.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.henryqui.foodta.domain.model.FormaPagamento;
 import com.henryqui.foodta.domain.repository.FormaPagamentoRepository;
 import com.henryqui.foodta.domain.service.FormaPagamentoService;
@@ -55,6 +57,20 @@ public class FormaPagamentoController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{formaPagamentoId}")
+    public ResponseEntity<FormaPagamento> remover(@PathVariable Long formaPagamentoId){
+        try{
+            formaPagamentoService.excluir(formaPagamentoId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

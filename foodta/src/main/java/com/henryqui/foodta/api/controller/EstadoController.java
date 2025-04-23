@@ -1,6 +1,8 @@
 package com.henryqui.foodta.api.controller;
 
 
+import com.henryqui.foodta.domain.exception.EntidadeEmUsoException;
+import com.henryqui.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.henryqui.foodta.domain.model.Estado;
 import com.henryqui.foodta.domain.repository.EstadoRepository;
 import com.henryqui.foodta.domain.service.EstadoService;
@@ -57,6 +59,20 @@ public class EstadoController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{estadoId}")
+    public ResponseEntity<Estado> remover(@PathVariable Long estadoId){
+        try{
+            estadoService.excluir(estadoId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

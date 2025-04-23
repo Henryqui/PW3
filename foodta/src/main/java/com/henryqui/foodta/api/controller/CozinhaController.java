@@ -1,6 +1,8 @@
 package com.henryqui.foodta.api.controller;
 
 
+import com.henryqui.foodta.domain.exception.EntidadeEmUsoException;
+import com.henryqui.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.henryqui.foodta.domain.model.Cozinha;
 import com.henryqui.foodta.domain.repository.CozinhaRepository;
 import com.henryqui.foodta.domain.service.CozinhaService;
@@ -8,6 +10,7 @@ import com.henryqui.foodta.domain.service.CozinhaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +61,20 @@ public class CozinhaController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{cozinhaId}")
+    public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId){
+        try{
+            cozinhaService.excluir(cozinhaId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

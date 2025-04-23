@@ -1,6 +1,8 @@
 package com.henryqui.foodta.api.controller;
 
 import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.henryqui.foodta.domain.exception.EntidadeEmUsoException;
+import com.henryqui.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.henryqui.foodta.domain.model.Cidade;
 
 import com.henryqui.foodta.domain.repository.CidadeRepository;
@@ -60,6 +62,20 @@ public class CidadeController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{cidadeId}")
+    public ResponseEntity<Cidade> remover(@PathVariable Long cidadeId){
+        try{
+            cidadeService.excluir(cidadeId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package com.henryqui.foodta.api.controller;
 
 
+import com.henryqui.foodta.domain.exception.EntidadeEmUsoException;
+import com.henryqui.foodta.domain.exception.EntidadeNaoEncontradaException;
 import com.henryqui.foodta.domain.model.Restaurante;
 import com.henryqui.foodta.domain.repository.RestauranteRepository;
 import com.henryqui.foodta.domain.service.RestauranteService;
@@ -58,6 +60,20 @@ public class RestauranteController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{restauranteId}")
+    public ResponseEntity<Restaurante> remover(@PathVariable Long restauranteId){
+        try{
+            restauranteService.excluir(restauranteId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }
