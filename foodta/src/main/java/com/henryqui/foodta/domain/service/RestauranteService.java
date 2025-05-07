@@ -15,11 +15,11 @@ public class RestauranteService {
     @Autowired
     private RestauranteRepository restauranteRepository;
 
-    public Restaurante salvar(Restaurante restaurante){return restauranteRepository.salvar(restaurante);}
+    public Restaurante salvar(Restaurante restaurante){return restauranteRepository.save(restaurante);}
 
     public void excluir(Long id){
         try {
-            restauranteRepository.remover(id);
+            restauranteRepository.deleteById(id);
         }
         catch(DataIntegrityViolationException e){
             throw new EntidadeEmUsoException(String.format("Cozinha ou código %d não pode ser removida, pois está em uso.", id));
