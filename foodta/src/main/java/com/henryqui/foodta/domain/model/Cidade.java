@@ -19,6 +19,8 @@ public class Cidade {
     @Column(name = "nome")
     private String nome;
 
+//    Caso a fk na tabela esteja com nome = tabela_id eu nao preciso do join column
+
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private Estado estado;
