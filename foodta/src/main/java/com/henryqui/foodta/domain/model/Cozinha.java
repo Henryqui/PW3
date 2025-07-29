@@ -2,6 +2,7 @@ package com.henryqui.foodta.domain.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ public class Cozinha {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O nome da cozinha é Obrigatório!")
     @Column(name = "nome_cozinha", length = 50)
     private String nome;
 }
