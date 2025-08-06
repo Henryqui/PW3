@@ -27,7 +27,7 @@ public class Aluno {
     private LocalDateTime datacadastro;
 
     @UpdateTimestamp
-    @Column( name = "dataAtualizacao", columnDefinition = "datetime")
+    @Column( name = "data_atualizacao", columnDefinition = "datetime")
     private LocalDateTime dataAtualizacao;
 
     @ManyToOne

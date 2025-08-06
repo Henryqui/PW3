@@ -1,8 +1,11 @@
 package com.revisaoaaa.revisaoasa.api.controller;
 
+import com.revisaoaaa.revisaoasa.domain.exception.EntidadeEmUsoException;
+import com.revisaoaaa.revisaoasa.domain.exception.EntidadeNaoEncontradaException;
 import com.revisaoaaa.revisaoasa.domain.model.Curso;
 import com.revisaoaaa.revisaoasa.domain.repository.CursoRepository;
 import com.revisaoaaa.revisaoasa.domain.service.CursoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +47,30 @@ public class CursoController {
     }
 
     @PutMapping("/{cursoId}")
+    public ResponseEntity<Curso> atualizar(@PathVariable Long cursoId, @RequestBody Curso curso){
+        Optional<Curso> cursoAtual = cursoRepository.findById(cursoId);
 
+        if (cursoAtual.isPresent()){
+            BeanUtils.copyProperties(curso, cursoAtual, "id");
+
+            Curso cursoSalvo = cursoService.salvar(cursoAtual.get());
+            return ResponseEntity.ok(cursoSalvo);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{cursoId}")
+    public ResponseEntity<Curso> remover(@PathVariable Long cursoId){
+        try{
+            cursoService.excluir(cursoId);
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeNaoEncontradaException e){
+            return ResponseEntity.notFound().build();
+        }
+        catch(EntidadeEmUsoException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
 
 }
